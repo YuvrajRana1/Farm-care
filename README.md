@@ -138,5 +138,5 @@ Quickstart:
 
 
 ---
-
+Deploy Link : https://farmer-care-qe9tmpaoi-gaurav-pandeys-projects-d4c64358.vercel.app/dashboard
 

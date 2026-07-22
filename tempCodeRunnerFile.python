@@ -1,0 +1,29 @@
+import axios from "axios";
+import cheerio from "cheerio";
+
+async function fetchCropPrices() {
+    const url = "https://agmarknet.gov.in/PriceAndArrivals/CommodityDailyStateWise.aspx";
+    try {
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
+        let cropPrices = [];
+
+        $("table tbody tr").each((index, row) => {
+            const columns = $(row).find("td");
+            let crop = $(columns[0]).text().trim();
+            let market = $(columns[1]).text().trim();
+            let price = $(columns[2]).text().trim();
+
+            if (crop) {
+                cropPrices.push({ crop, market, price });
+            }
+        });
+
+        return cropPrices;
+    } catch (error) {
+        console.error("Error fetching crop prices:", error);
+        return [];
+    }
+}
+
+fetchCropPrices().then((prices) => console.log(prices));
